@@ -1,36 +1,35 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Implementation Notes
 
-## Getting Started
+## Approach
 
-First, run the development server:
+I separated the application into three main concerns:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+1. Listing search and ranking logic
+2. API request validation and response handling
+3. React UI state and user interaction
+
+The search logic is independent from the UI, which allows it to be tested without rendering React components. This also makes the code easier to extend if new requirements are introduced.
+
+## Filtering
+
+Filters are applied before ranking:
+
+- `minPrice` includes listings with a price greater than or equal to the minimum.
+- `maxPrice` includes listings with a price less than or equal to the maximum.
+- `minBedrooms` includes listings with at least the requested number of bedrooms.
+- `city` is matched case-insensitively.
+- `keyword` is matched case-insensitively against the listing description.
+
+Filters use `AND` behavior. When multiple filters are provided, a listing must satisfy all of them.
+
+Text inputs are trimmed before searching so that accidental whitespace does not affect the results.
+
+## Relevance Scoring
+
+The relevance score is based on target-budget proximity and listing recency.
+
+The budget score is calculated from the percentage difference between the listing price and the target budget:
+
+```text
+budgetScore = max(0, 1 - abs(price - targetBudget) / targetBudget)
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
