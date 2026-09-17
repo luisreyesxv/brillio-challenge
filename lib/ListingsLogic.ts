@@ -8,7 +8,7 @@ export type SearchFilters = {
   maxPrice?: number;
   minBedrooms?: number;
   city?: string;
-  keyword?: string;
+  keywords?: string;
   targetBudget?: number;
   page?: number;
 };
@@ -19,7 +19,7 @@ export function searchListings(filters: SearchFilters) {
     maxPrice,
     minBedrooms,
     city,
-    keyword,
+    keywords,
     targetBudget,
     page = 1,
   } = filters;
@@ -51,8 +51,8 @@ export function searchListings(filters: SearchFilters) {
     }
 
     if (
-      keyword &&
-      !listing.description.toLowerCase().includes(keyword.toLowerCase())
+      keywords &&
+      !listing.description.toLowerCase().includes(keywords.toLowerCase())
     ) {
       return false;
     }

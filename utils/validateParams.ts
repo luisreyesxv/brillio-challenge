@@ -28,7 +28,7 @@ function parseOptionalNumber(
     return undefined;
   }
 
-  const parsed = Number(value);
+  const parsed = Number(value.replaceAll(/,/g, ""));
 
   if (!Number.isFinite(parsed)) {
     throw new Error(`${name} must be a valid number`);

@@ -43,15 +43,15 @@ export default function Form({ apiFunction }: Props) {
     const nextErrors: FormErrors = {};
 
     const minPrice = values.minPrice
-      ? Number(values.minPrice.replace(/[$,]/g, ""))
+      ? Number(values.minPrice.replace(/[$,,]/g, ""))
       : null;
 
     const maxPrice = values.maxPrice
-      ? Number(values.maxPrice.replace(/[$,]/g, ""))
+      ? Number(values.maxPrice.replace(/[$,,]/g, ""))
       : null;
 
     const targetBudget = values.targetBudget
-      ? Number(values.targetBudget.replace(/[$,]/g, ""))
+      ? Number(values.targetBudget.replace(/[$,,]/g, ""))
       : null;
 
     const minBedrooms = values.minBedrooms ? Number(values.minBedrooms) : null;
