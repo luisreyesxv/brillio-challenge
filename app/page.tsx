@@ -61,7 +61,7 @@ export default function Home() {
       return;
     }
 
-    if (currentPage + 1 > totalPages) {
+    if (currentPage + 1 >= totalPages) {
       fetchSearchResults(lastSearchValues, currentPage + 1);
     } else {
       setSearchError("page doesn't exist");
@@ -102,8 +102,10 @@ export default function Home() {
             {loading && <p> loading results</p>}
             {!loading && searchError}
           </div>
+        </section>
 
-          {/* pages */}
+        {/* pagination */}
+        <section className="mt-5">
           {!!totalPages && (
             <div className="mt-8 flex items-center justify-center gap-4">
               <button

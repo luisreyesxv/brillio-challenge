@@ -21,10 +21,6 @@ export type ListingSearchResponse = {
   results: ListingType[];
   pagination: {
     page: number;
-    pageSize: number;
-    total: number;
     totalPages: number;
-    hasNextPage: boolean;
-    hasPreviousPage: boolean;
   };
 };
