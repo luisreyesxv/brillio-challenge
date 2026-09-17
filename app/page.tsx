@@ -26,15 +26,15 @@ export default function Home() {
   const [searchMessage, setSearchMessage] = useState("");
 
   async function fetchSearchResults(values: FormValues, page = 1) {
-    await setResults([]);
-    await setCurrentPage(0);
-    await setTotalPages(0);
+    setResults([]);
+    setCurrentPage(0);
+    setTotalPages(0);
 
     if (page === 1) {
       setLastSearchValues(values);
     }
 
-    await setLoading(true);
+    setLoading(true);
     setSearchMessage("");
 
     try {
@@ -56,7 +56,7 @@ export default function Home() {
       }
     }
 
-    await setLoading(false);
+    setLoading(false);
   }
 
   async function handleNextButton() {
@@ -66,7 +66,7 @@ export default function Home() {
     }
     const newPage = Number(currentPage) + 1;
 
-    if (currentPage + 1 >= totalPages) {
+    if (currentPage + 1 <= totalPages) {
       fetchSearchResults(lastSearchValues, newPage);
       setCurrentPage(newPage);
     } else {
@@ -75,13 +75,14 @@ export default function Home() {
   }
 
   async function handlePreviousButton() {
+    const newPage = Number(currentPage) - 1;
     if (lastSearchValues === null) {
       setSearchMessage("Please search using the form above");
       return;
     }
 
     if (currentPage - 1 > 0) {
-      fetchSearchResults(lastSearchValues, currentPage + 1);
+      fetchSearchResults(lastSearchValues, newPage);
     } else {
       setSearchMessage("page doesn't exist");
     }

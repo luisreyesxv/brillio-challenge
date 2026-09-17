@@ -70,7 +70,6 @@ export default function Form({ apiFunction }: Props) {
 
     if (values.minPrice && !Number.isFinite(minPrice)) {
       nextErrors.minPrice = "Enter a valid minimum price.";
-      console.log("this cause the problem", values.minPrice);
     } else if (minPrice !== null && minPrice < 0) {
       nextErrors.minPrice = "Minimum price cannot be negative.";
     }
