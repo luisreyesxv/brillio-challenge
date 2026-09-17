@@ -1,16 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ChangeEvent } from "react";
-
-type FormValues = {
-  city: string;
-  minPrice: string;
-  maxPrice: string;
-  minBedrooms: string;
-  keywords: string;
-  targetBudget: string;
-};
+import { FormValues } from "@/types/FormTypes";
 
 type FormErrors = Partial<Record<keyof FormValues, string>> & {
   general?: string;
@@ -26,7 +17,7 @@ const initialValues: FormValues = {
 };
 
 type Props = {
-  apiFunction: () => void;
+  apiFunction: (values: FormValues) => Promise<void>;
 };
 
 export default function Form({ apiFunction }: Props) {
@@ -77,8 +68,9 @@ export default function Form({ apiFunction }: Props) {
       nextErrors.city = "City must be 100 characters or fewer.";
     }
 
-    if (values.minPrice) {
+    if (values.minPrice && !Number.isFinite(minPrice)) {
       nextErrors.minPrice = "Enter a valid minimum price.";
+      console.log("this cause the problem", values.minPrice);
     } else if (minPrice !== null && minPrice < 0) {
       nextErrors.minPrice = "Minimum price cannot be negative.";
     }
@@ -130,7 +122,7 @@ export default function Form({ apiFunction }: Props) {
     setSubmitted(true);
 
     // Add your API request here later.
-    console.log("Valid form values:", values);
+    apiFunction(values);
   }
 
   return (

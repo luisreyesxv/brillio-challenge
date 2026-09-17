@@ -1,4 +1,4 @@
-import { ListingType } from "@/types/ListingType";
+import { ListingType } from "@/types/ListingTypes";
 
 type Props = {
   listing: ListingType;

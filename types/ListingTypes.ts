@@ -16,3 +16,15 @@ export type ListingType = {
   description: string;
   score?: number;
 };
+
+export type ListingSearchResponse = {
+  results: ListingType[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+};
