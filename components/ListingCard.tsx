@@ -18,10 +18,7 @@ export default function ListingCard({ listing }: Props) {
 
   const statusColor = colorClass[listing.status?.toLowerCase()];
   return (
-    <div
-      key={listing.address}
-      className="overflow-hidden rounded-xl border bg-white shadow-sm"
-    >
+    <div className="overflow-hidden rounded-xl border bg-white shadow-sm">
       <div className="p-5">
         <div className="mb-4 flex items-start justify-between gap-4">
           <div>
@@ -32,7 +29,6 @@ export default function ListingCard({ listing }: Props) {
           <span
             className="rounded-full px-2.5 py-1 text-sm font-black capitalize "
             style={{
-              color: `contrast-color(${statusColor})`,
               backgroundColor: statusColor,
             }}
           >
@@ -40,12 +36,12 @@ export default function ListingCard({ listing }: Props) {
           </span>
         </div>
 
-        <p className="text-2xl font-bold">${listing.price.toLocaleString()}</p>
+        <p className="text-2xl font-bold">${listing.price}</p>
 
         <div className="mt-4 flex gap-4 text-sm text-slate-600">
           <span>{listing.bedrooms} beds</span>
           <span>{listing.bathrooms} baths</span>
-          <span>{listing.sqft.toLocaleString()} sqft</span>
+          <span>{listing.sqft} sqft</span>
         </div>
 
         <div className="mt-5 flex items-center justify-between pt-4">
