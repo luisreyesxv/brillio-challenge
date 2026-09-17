@@ -18,22 +18,24 @@ type ResultsType = ListingType[];
 export default function Home() {
   const [results, setResults] = useState<ResultsType>([]);
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState(0);
   const [lastSearchValues, setLastSearchValues] = useState<FormValues | null>(
     null,
   );
-  const [searchError, setSearchError] = useState("");
+  const [searchMessage, setSearchMessage] = useState("");
 
   async function fetchSearchResults(values: FormValues, page = 1) {
-    await setResults;
+    await setResults([]);
+    await setCurrentPage(0);
+    await setTotalPages(0);
 
     if (page === 1) {
       setLastSearchValues(values);
     }
 
     await setLoading(true);
-    setSearchError("");
+    setSearchMessage("");
 
     try {
       const response = await searchListings(values, page);
@@ -41,12 +43,14 @@ export default function Home() {
         setResults(response.results);
         setCurrentPage(response.pagination.page);
         setTotalPages(response.pagination.totalPages);
+      } else {
+        setSearchMessage("No listings found matching your search.");
       }
     } catch (e) {
       if (e instanceof Error) {
-        setSearchError(e.message);
+        setSearchMessage(e.message);
       } else {
-        setSearchError(
+        setSearchMessage(
           "there was a problem with the connection. Please try again later",
         );
       }
@@ -57,27 +61,29 @@ export default function Home() {
 
   async function handleNextButton() {
     if (lastSearchValues === null) {
-      setSearchError("Please search using the form above");
+      setSearchMessage("Please search using the form above");
       return;
     }
+    const newPage = Number(currentPage) + 1;
 
     if (currentPage + 1 >= totalPages) {
-      fetchSearchResults(lastSearchValues, currentPage + 1);
+      fetchSearchResults(lastSearchValues, newPage);
+      setCurrentPage(newPage);
     } else {
-      setSearchError("page doesn't exist");
+      setSearchMessage("page doesn't exist");
     }
   }
 
   async function handlePreviousButton() {
     if (lastSearchValues === null) {
-      setSearchError("Please search using the form above");
+      setSearchMessage("Please search using the form above");
       return;
     }
 
     if (currentPage - 1 > 0) {
       fetchSearchResults(lastSearchValues, currentPage + 1);
     } else {
-      setSearchError("page doesn't exist");
+      setSearchMessage("page doesn't exist");
     }
   }
 
@@ -100,7 +106,7 @@ export default function Home() {
               ))}
 
             {loading && <p> loading results</p>}
-            {!loading && searchError}
+            {!loading && searchMessage}
           </div>
         </section>
 

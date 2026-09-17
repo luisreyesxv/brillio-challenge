@@ -99,7 +99,7 @@ export default function Form({ apiFunction }: Props) {
       nextErrors.keywords = "Keywords must be 100 characters or fewer.";
     }
 
-    if (values.targetBudget) {
+    if (values.targetBudget && !Number.isFinite(targetBudget)) {
       nextErrors.targetBudget = "Enter a valid target budget.";
     } else if (targetBudget !== null && targetBudget <= 0) {
       nextErrors.targetBudget = "Target budget must be greater than zero.";

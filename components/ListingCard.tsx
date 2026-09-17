@@ -36,7 +36,7 @@ export default function ListingCard({ listing }: Props) {
           </span>
         </div>
 
-        <p className="text-2xl font-bold">${listing.price}</p>
+        <p className="text-2xl font-bold">${listing.price.toLocaleString()}</p>
 
         <div className="mt-4 flex gap-4 text-sm text-slate-600">
           <span>{listing.bedrooms} beds</span>
