@@ -1,5 +1,5 @@
-import listingsJson from "@/json/listings.json";
-import { ListingType } from "@/types/ListingTypes";
+import listingsJson from "../json/listings.json";
+import { ListingType } from "../types/ListingTypes";
 
 const RESULTS_PER_PAGE = 6;
 
@@ -118,5 +118,7 @@ export function searchListings(filters: SearchFilters) {
       page,
       totalPages,
     },
+    total: total,
+    totalPages: totalPages,
   };
 }
