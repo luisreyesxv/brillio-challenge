@@ -1,13 +1,14 @@
 import listingsJson from "../json/listings.json";
 import { ListingType } from "../types/ListingTypes";
 
-const RESULTS_PER_PAGE = 6;
+export const RESULTS_PER_PAGE = 6;
 
 export type SearchFilters = {
   minPrice?: number;
   maxPrice?: number;
   minBedrooms?: number;
   city?: string;
+  state?: string;
   keywords?: string;
   targetBudget?: number;
   page?: number;
@@ -19,6 +20,7 @@ export function searchListings(filters: SearchFilters) {
     maxPrice,
     minBedrooms,
     city,
+    state,
     keywords,
     targetBudget,
     page = 1,
@@ -50,6 +52,10 @@ export function searchListings(filters: SearchFilters) {
       return false;
     }
 
+    if (state && !listing.state.toLowerCase().includes(state.toLowerCase())) {
+      return false;
+    }
+
     if (
       keywords &&
       !listing.description.toLowerCase().includes(keywords.toLowerCase())
@@ -62,6 +68,10 @@ export function searchListings(filters: SearchFilters) {
   const scoredListings = filteredListings
     .map((listing) => {
       let score = 0;
+
+      // i believe the score is ultimately only matters for in sorting/comparing the results.
+      // if the actual number mattered to the client, i'd probably shift this to calculate differently depending on whether
+      //they included a targetBudget or not.
       if (targetBudget !== undefined) {
         const difference = targetBudget - listing.price;
 

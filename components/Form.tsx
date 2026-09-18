@@ -56,9 +56,11 @@ export default function Form({ apiFunction }: Props) {
 
     const minBedrooms = values.minBedrooms ? Number(values.minBedrooms) : null;
 
-    const hasSearchValue = Object.values(values).some(
-      (value) => value.trim() !== "",
-    );
+    const hasSearchValue = Object.values(values).some((value) => {
+      return (
+        value !== null && value !== undefined && String(value).trim() !== ""
+      );
+    });
 
     if (!hasSearchValue) {
       nextErrors.general = "Enter at least one search filter.";
@@ -125,10 +127,10 @@ export default function Form({ apiFunction }: Props) {
   }
 
   return (
-    <section className="rounded-2xl bg-slate-900 p-6 text-white shadow-xl">
+    <section className="rounded-2xl bg-[#7f5bff] p-6 text-white shadow-xl">
       <div className="mb-5">
-        <h2 className="text-xl font-semibold">Search listings</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <h2 className="text-2xl font-black ">Search listings</h2>
+        <p className="mt-1 text-sm text-white">
           Use the filters below to narrow down your results.
         </p>
       </div>
@@ -142,7 +144,7 @@ export default function Form({ apiFunction }: Props) {
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
-            <label className="mb-2 block text-sm font-medium text-slate-300">
+            <label className="mb-2 block text-sm font-medium text-white">
               City
             </label>
             <input
@@ -159,7 +161,7 @@ export default function Form({ apiFunction }: Props) {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
+            <label className="mb-2 block text-sm font-medium text-white">
               Minimum price
             </label>
             <input
@@ -175,7 +177,7 @@ export default function Form({ apiFunction }: Props) {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
+            <label className="mb-2 block text-sm font-medium text-white">
               Maximum price
             </label>
             <input
@@ -191,7 +193,7 @@ export default function Form({ apiFunction }: Props) {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
+            <label className="mb-2 block text-sm font-medium text-white">
               Minimum bedrooms
             </label>
             <select
@@ -201,7 +203,8 @@ export default function Form({ apiFunction }: Props) {
               }
               className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-3 text-white outline-none"
             >
-              <option value="">Any</option>
+              <option value=""></option>
+              <option value="0">Any</option>
               <option value="1">1+</option>
               <option value="2">2+</option>
               <option value="3">3+</option>
@@ -213,7 +216,7 @@ export default function Form({ apiFunction }: Props) {
           </div>
 
           <div className="lg:col-span-2">
-            <label className="mb-2 block text-sm font-medium text-slate-300">
+            <label className="mb-2 block text-sm font-medium text-white">
               Keywords
             </label>
             <input
@@ -230,7 +233,7 @@ export default function Form({ apiFunction }: Props) {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-300">
+            <label className="mb-2 block text-sm font-medium text-white">
               Target budget
             </label>
             <input
@@ -250,7 +253,7 @@ export default function Form({ apiFunction }: Props) {
 
         <button
           type="submit"
-          className="mt-6 rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white transition hover:bg-blue-400"
+          className="mt-6 rounded-lg bg-[#2cc84d] px-6 py-3 font-semibold text-white transition hover:bg-[#2cc84d]/90"
         >
           Search listings
         </button>

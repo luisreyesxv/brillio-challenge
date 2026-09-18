@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import listings from "@/json/listings.json";
-
 import ListingCard from "@/components/ListingCard";
 import { ListingType } from "@/types/ListingTypes";
 
@@ -89,7 +87,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900">
+    <main className="min-h-screen bg-[#141414] text-slate-900">
       <section className="mx-auto max-w-7xl px-6 py-12">
         {/* The Form */}
         <Form apiFunction={fetchSearchResults} />
@@ -119,12 +117,12 @@ export default function Home() {
                 type="button"
                 onClick={handlePreviousButton}
                 disabled={loading || currentPage <= 1}
-                className="rounded bg-slate-800 px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded bg-[#7f5bff] px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Previous
               </button>
 
-              <span className="text-sm">
+              <span className="text-sm text-[#2cc84d]">
                 Page {currentPage} of {totalPages}
               </span>
 
@@ -132,7 +130,7 @@ export default function Home() {
                 type="button"
                 onClick={handleNextButton}
                 disabled={loading || currentPage >= totalPages}
-                className="rounded bg-slate-800 px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-40"
+                className="rounded bg-[#7f5bff] px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-40"
               >
                 Next
               </button>

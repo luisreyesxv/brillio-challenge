@@ -1,33 +1,35 @@
 import { describe, expect, it } from "vitest";
-import { listings } from "./fixtures/listings";
-import { searchListings } from "../lib/ListingsLogic";
+import { searchListings, RESULTS_PER_PAGE } from "../lib/ListingsLogic";
 
 describe("searchListings pagination", () => {
   it("returns the first page", () => {
     const result = searchListings({
+      state: "VA",
       page: 1,
     });
 
-    expect(result.results).toHaveLength(2);
+    expect(result.results).toHaveLength(RESULTS_PER_PAGE);
     expect(result.pagination.page).toBe(1);
     expect(result.totalPages).toBe(2);
   });
 
   it("returns the second page", () => {
     const result = searchListings({
+      state: "VA",
       page: 2,
     });
 
-    expect(result.results).toHaveLength(2);
+    expect(result.results).toHaveLength(RESULTS_PER_PAGE);
     expect(result.pagination.page).toBe(2);
   });
 
   it("returns a partial final page", () => {
     const result = searchListings({
       page: 2,
+      maxPrice: 600000,
     });
 
-    expect(result.results).toHaveLength(1);
+    expect(result.results).toHaveLength(5);
     expect(result.totalPages).toBe(2);
   });
 
@@ -42,7 +44,7 @@ describe("searchListings pagination", () => {
   });
 
   it("uses sensible defaults when pagination is omitted", () => {
-    const result = searchListings({});
+    const result = searchListings({ city: "springfield" });
 
     expect(result.pagination.page).toBe(1);
   });
